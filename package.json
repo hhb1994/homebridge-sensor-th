@@ -1,0 +1,23 @@
+{
+  "name": "homebridge-sensor-th",
+  "version": "0.0.1",
+  "description": "树莓派连接DHT11/22 传感器接入 homebridge",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hhb1994/homebridge-sensor-th.git"
+  },
+  "keywords": [
+    "homebridge",
+    "homebridge-plugin"
+  ],
+  "author": "hanhongbin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hhb1994/homebridge-sensor-th/issues"
+  },
+  "homepage": "https://github.com/hhb1994/homebridge-sensor-th#readme"
+}
