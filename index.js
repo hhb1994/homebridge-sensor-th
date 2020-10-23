@@ -4,7 +4,7 @@
  * @version: 1.0.0
  * @LastEditors: 韩宏斌
  * @Date: 2020-10-23 09:33:58
- * @LastEditTime: 2020-10-23 09:45:40
+ * @LastEditTime: 2020-10-23 10:48:01
  * @FilePath: /homebridge-sensor-th/index.js
  */
 let exec = require("child_process").exec;
@@ -37,34 +37,41 @@ class SensorAccessory {
     ////////////////////创建服务///////////////////////////////
     //温度传感器
     if (!this.dataType) {
+      this.service = new this.Service.TemperatureSensor(this.name);
+      this.service
+        .getCharacteristic(this.Characteristic.CurrentTemperature)
+        .on("get", this.handleDataGet.bind(this));
     }
-
     //湿度传感器
     else {
       this.service = new this.Service.HumiditySensor(this.name);
       this.service
         .getCharacteristic(this.Characteristic.CurrentRelativeHumidity)
-        .on("get", this.handleCurrentRelativeHumidityGet.bind(this));
+        .on("get", this.handleDataGet.bind(this));
     }
   }
-
-  handleCurrentRelativeHumidityGet(callback) {
-    exec(
-      `python /usr/lib/node_modules/homebridge-humidity-sensor-han/hs.py ${this.type} ${this.source}`,
-      (err, stdout, stderr) => {
-        if (err) {
-          this.log(err);
-          callback(null, 0);
-        } else {
-          this.log("CurrentRelativeHumidity: " + stdout);
-          callback(null, stdout);
-          // return stdout;
+  handleDataGet(callback) {
+    exec("npm config get prefix", (err0, modulePath) => {
+      exec(
+        `python ${modulePath.replace(
+          /(\s*$)/g,
+          ""
+        )}/lib/node_modules/homebridge-sensor-th/sensor.py ${this.type} ${
+          this.source
+        } ${this.dataType}`,
+        (err, stdout) => {
+          if (err) {
+            this.log(err);
+            callback(null, 0);
+          } else {
+            this.log((this.dataType ? "当前湿度:" : "当前温度:") + stdout);
+            callback(null, stdout);
+          }
         }
-      }
-    );
+      );
+    });
   }
-
-  ////////////////暴露服务//////////////////
+  //暴露服务
   getServices() {
     return [this.service, this.informationService];
   }

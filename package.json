@@ -1,6 +1,6 @@
 {
   "name": "homebridge-sensor-th",
-  "version": "0.0.1",
+  "version": "0.1.4",
   "description": "树莓派连接DHT11/22 传感器接入 homebridge",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,9 @@
   "bugs": {
     "url": "https://github.com/hhb1994/homebridge-sensor-th/issues"
   },
-  "homepage": "https://github.com/hhb1994/homebridge-sensor-th#readme"
+  "homepage": "https://github.com/hhb1994/homebridge-sensor-th#readme",
+  "engines": {
+    "node": ">=0.12.0",
+    "homebridge": ">=0.2.0"
+  }
 }
