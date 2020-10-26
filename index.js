@@ -4,10 +4,10 @@
  * @version: 1.0.0
  * @LastEditors: 韩宏斌
  * @Date: 2020-10-23 09:33:58
- * @LastEditTime: 2020-10-23 10:48:01
+ * @LastEditTime: 2020-10-26 10:20:46
  * @FilePath: /homebridge-sensor-th/index.js
  */
-let exec = require("child_process").exec;
+let sensor = require("node-dht-sensor").promises;
 module.exports = (api) => {
   api.registerAccessory("SensorPlugin", SensorAccessory);
 };
@@ -24,8 +24,6 @@ class SensorAccessory {
     this.type = config.type || 11;
     //引脚
     this.source = config.source || 4;
-    // //自动更新时长
-    // this.time = config.time || 5000;
     //数据类型
     this.dataType = config.dataType || 0;
     //服务名称
@@ -51,25 +49,23 @@ class SensorAccessory {
     }
   }
   handleDataGet(callback) {
-    exec("npm config get prefix", (err0, modulePath) => {
-      exec(
-        `python ${modulePath.replace(
-          /(\s*$)/g,
-          ""
-        )}/lib/node_modules/homebridge-sensor-th/sensor.py ${this.type} ${
-          this.source
-        } ${this.dataType}`,
-        (err, stdout) => {
-          if (err) {
-            this.log(err);
-            callback(null, 0);
-          } else {
-            this.log((this.dataType ? "当前湿度:" : "当前温度:") + stdout);
-            callback(null, stdout);
-          }
-        }
-      );
-    });
+    sensor
+      .read(this.type, this.source)
+      .then((res) => {
+        this.log(
+          this.dataType
+            ? `当前湿度:${res.humidity.toFixed(1)}`
+            : `当前温度:${res.temperature.toFixed(1)}`
+        );
+        callback(
+          null,
+          this.dataType ? res.humidity.toFixed(1) : res.temperature.toFixed(1)
+        );
+      })
+      .catch((err) => {
+        this.log(err);
+        callback(null, 0);
+      });
   }
   //暴露服务
   getServices() {

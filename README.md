@@ -1,5 +1,4 @@
-通过[Adafruit_Python_DHT](https://github.com/adafruit/Adafruit_Python_DHT),
-来实现传感器接到树莓派,并接入 homebridge 的功能.
+实现传感器接到树莓派,并接入 homebridge 的功能.
 
 可以获取到当前传感器的温度和湿度数据:
 
@@ -15,9 +14,9 @@
 
 - DHT11(type=11)
 - DHT22(type=22)
-- AM2302(type=2302)
+- AM2302(type=22)
 
-通过 homebridge `config.json` 中的 `type` 进行选择(默认为 DHT 11)
+通过 homebridge `config.json` 中的 `type` 进行选择(默认为 11)
 
 ## 引脚(source)
 
@@ -35,22 +34,9 @@
 
 # 使用方法
 
-## 1.安装 python
-
-## 2.安装 Adafruit Python DHT
-
-```sh
-
-# python2
-sudo pip install Adafruit_DHT
 
 
-# python3
-sudo pip3 install Adafruit_DHT
-
-```
-
-## 3.安装 `homebridge-sensor-th`
+## 安装 `homebridge-sensor-th`
 
 ```sh
 

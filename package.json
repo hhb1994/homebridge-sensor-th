@@ -1,6 +1,6 @@
 {
   "name": "homebridge-sensor-th",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "树莓派连接DHT11/22 传感器接入 homebridge",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,8 @@
   },
   "keywords": [
     "homebridge",
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "DHT"
   ],
   "author": "hanhongbin",
   "license": "ISC",
@@ -23,5 +24,8 @@
   "engines": {
     "node": ">=0.12.0",
     "homebridge": ">=0.2.0"
+  },
+  "dependencies": {
+    "node-dht-sensor": "^0.4.3"
   }
 }
